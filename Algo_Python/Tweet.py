@@ -34,11 +34,6 @@ class ArchiveAPI(object):
         self.key = key
         self.root = 'http://api.nytimes.com/svc/archive/v1/{}/{}.json?api-key={}'
         if not self.key:
-
-            #nyt_dev_page = 'Web site'
-            #exception_str = 'Error'
-
-
             nyt_dev_page = 'http://developer.nytimes.com/docs/reference/keys'
             exception_str = 'API required.'
             raise NoAPIKeyException(exception_str.format(nyt_dev_page))
@@ -46,26 +41,10 @@ class ArchiveAPI(object):
     def query(self, year=None, month=None, key=None, ):
         if not key: key = self.key
         if (year < 1882) or not (0 < month < 13):
-
-
-
             raise InvalidQueryException('Invalid query')
         url = self.root.format(year, month, key)
         r = requests.get(url)
         return r.json()
-
-    # with slim.arg_scope([slim.conv2d, slim.fully_connected],
-    #                     weights_regularizer=slim.l2_regularizer(weight_decay)):
-
-
-
-    #     with slim.arg_scope(
-    #         [slim.conv2d],
-    #         weights_initializer=slim.variance_scaling_initializer(),
-    #         activation_fn=tf.nn.relu,
-    #         normalizer_fn=normalizer_fn,
-    #         normalizer_params=normalizer_params) as sc:
-
 
 api = ArchiveAPI('0ba6dc04a8cb44e0a890c00df88c393a')
 
